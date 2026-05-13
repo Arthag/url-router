@@ -1,6 +1,4 @@
-#####################
-## Setup
-#####################
+# Setup
 The project is prepared as Docker Container.
 
 1. Clone the sources from https://github.com/Arthag/url-router.git
@@ -20,9 +18,7 @@ If you want to use an external DB or another one adapt the docker-compose.yaml
 
 4. Build and start the Docker Project
 
-#####################
-## Short explanation
-#####################
+# Short explanation
 I decided to keep it small and simple, so there is just:
 - UrlRouterController
 - UrlRoutes (Model)
@@ -45,19 +41,18 @@ For this project 120 mins was estimated, not sure if it's possible to do it comp
 There are some security issues which I ignored because lack of time, eg. at the moment just a simple post is needed to deactivate a Slug. The forwarding can be used for Phishing, because it's possible to redirect to a long evil URL from a trusty URL where this Service runs.
 
 
-#####################
-## Functions:
-#####################
-### Overview ###
+# Functions:
+
+## Overview
 - Create
 - Redirect
 - Deact
 - Statistic
 
-### Create ###
+## Create
 Creates or Updates a Slug for an URL Redirect
 
-# Example 
+### Example 
 
 Request:
 Invoke-RestMethod -Method POST -Uri "http://localhost:9002/api/create" -ContentType "application/json" -Body '{"target_url":"https://google.de"}'
@@ -72,20 +67,20 @@ updated_at    : 2026-05-13T12:00:12.000000Z
 
 
 
-### Redirect (r) ###
+## Redirect (r) 
 Redirects a tiny URL to the belonging long URL
 
-# Example
+### Example
 Request:
 http://localhost:9002/api/r/mcG-3
 
 Response: 
 The external Webpage, eg. https://google.de
 
-### Deact
+## Deact
 Deactivates a Slug by setting the valid_to = now()
 
-# Example
+### Example
 Request: 
 Invoke-RestMethod -Method POST -Uri "http://localhost:9002/api/deact" -ContentType "application/json" -Body '{"slug":"UXR-1"}'
 
@@ -95,10 +90,10 @@ slug  valid_to
 UXR-1 2026-05-13 12:51:49
 
 
-### Statistic ###
+## Statistic 
 Get Statistics for a Slug-Url
 
-# Example
+### Example
 Request:
 http://localhost:9002/api/statistic/UXR-1
 
