@@ -80,8 +80,10 @@ COPY --chown=www-data:www-data . /var/www/html
 RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database/migrations && \
     chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database/migrations
 
-# Enable rewrite modules for Laravel
-RUN a2enmod rewrite
+# Add some DB drivers + enable rewrite
+RUN docker-php-ext-install pdo pdo_mysql mysqli && \
+    a2enmod rewrite
+
 
 # Set Apache document root to public directory
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf

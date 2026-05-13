@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('url_routes', function (Blueprint $table) {
             $table->id();
             $table->text('target_url')->nullable(false);
-            $table->string('slug',20)->nullable(false);
+            $table->string('slug',20)->nullable(false)->unique();
             $table->integer('click_counter')->default(0);
             $table->timestamp('valid_to')->nullable();
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('urls');
+        Schema::dropIfExists('url_routes');
     }
 };
