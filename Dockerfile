@@ -72,9 +72,13 @@ FROM php:8.4-apache as final
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Copy the app dependencies from the previous install stage.
-COPY --from=deps app/vendor/ /var/www/html/vendor
+COPY --from=deps --chown=www-data:www-data app/vendor/ /var/www/html/vendor
 # Copy the app files from the app directory.
 COPY --chown=www-data:www-data . /var/www/html
+
+# Create writable directories with correct permissions
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database/migrations && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database/migrations
 
 # Enable rewrite modules for Laravel
 RUN a2enmod rewrite

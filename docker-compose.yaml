@@ -13,6 +13,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: url-router
+    user: www-data
     ports:
       - 9002:80
     environment:
@@ -25,6 +26,23 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
+    volumes:
+      - app-storage:/var/www/html/storage
+      - app-migrations:/var/www/html/database/migrations
+    develop:
+      watch:
+        - path: ./app
+          target: /var/www/html/app
+          action: sync
+        - path: ./routes
+          target: /var/www/html/routes
+          action: sync
+        - path: ./resources
+          target: /var/www/html/resources
+          action: sync
+        - path: ./config
+          target: /var/www/html/config
+          action: sync
   db:
     image: mysql:latest
     container_name: url-router-db
@@ -38,6 +56,8 @@ services:
       - url_router_data:/var/lib/mysql
 volumes:
   url_router_data:
+  app-storage:
+  app-migrations:
     
 
 # The commented out section below is an example of how to define a PostgreSQL
