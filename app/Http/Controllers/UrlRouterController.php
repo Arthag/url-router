@@ -13,9 +13,9 @@ class UrlRouterController{
             'target_url' => ['required', 'url'],
             'valid_to' => ['nullable','date']
         ]);       
-        return response()->json([
+        return response()->json(
             $service->updateOrCreateRoute(targetUrl: $validated['target_url'], validTo: $validated['valid_to'] ?? null)
-        ]);
+        );
     }
 
     public function redirect(string $slug, UrlRouterService $service){    
@@ -33,18 +33,14 @@ class UrlRouterController{
         if (!preg_match('/^[A-Za-z]{3}-\d+$/', $validated['slug'])) {
             abort(404);
         }
-        return response()->json([
-            $service->deactRoute($validated['slug'])
-        ]);
+        return response()->json($service->deactRoute($validated['slug']));
     }
 
     public function statistic(string $slug, UrlRouterService $service){    
         if (!preg_match('/^[A-Za-z]{3}-\d+$/', $slug)) {
             abort(404);
         }
-        return response()->json([
-            $service->getStatistic(slug: $slug)
-        ]);
+        return response()->json($service->getStatistic(slug: $slug));
     }
 
 

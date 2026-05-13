@@ -1,7 +1,7 @@
 ## About
 
 #####################
-## Usage:
+## Functions:
 #####################
 
 
@@ -33,6 +33,18 @@ http://localhost:9002/api/r/mcG-3
 
 Response: 
 The external Webpage, eg. https://google.de
+
+### Deact
+Deactivates a Slug by setting the valid_to = now()
+
+# Example
+Request: 
+Invoke-RestMethod -Method POST -Uri "http://localhost:9002/api/deact" -ContentType "application/json" -Body '{"slug":"UXR-1"}'
+
+Response:
+slug  valid_to
+----  --------
+UXR-1 2026-05-13 12:51:49
 
 
 ### Statistic ###
